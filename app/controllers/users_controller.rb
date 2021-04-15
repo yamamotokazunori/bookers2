@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-before_action :authenticate_user!
+
   def index
     @book_new = Book.new
     @user = current_user
@@ -14,6 +14,11 @@ before_action :authenticate_user!
 
   def edit
     @user = User.find(params[:id])
+    if @user.id == current_user.id
+      render :edit
+    else
+      redirect_to user_path(current_user)
+    end
   end
 
   def update
